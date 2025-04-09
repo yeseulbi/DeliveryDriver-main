@@ -44,6 +44,7 @@ public class buttonSystem : MonoBehaviour
     {
         button_Parent.SetActive(true);
         Debug.Log("¹öÆ°on");
+        Invoke(nameof(Button_close), 4f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
