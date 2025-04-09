@@ -50,10 +50,6 @@ public class buttonSystem : MonoBehaviour
         {
             Button_open();
         }
-        else
-        {
-
-        }
     }
 
     void OriginalButton_Click()
@@ -82,10 +78,5 @@ public class buttonSystem : MonoBehaviour
         Seasoning = 4;
         Delivery.hasChicken = 2;
         Button_close();
-    }
-
-    void Update()
-    {
-
     }
 }

@@ -16,16 +16,13 @@ public class Drift : MonoBehaviour
     AudioSource audioSource;
 
     float defaultAcceleration;
-    float slowAccelerationRatio;
-    float boostAccelerationRatio;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = rb.GetComponent<AudioSource>();
 
         defaultAcceleration = acceleration;
-        slowAccelerationRatio = acceleration * slowAccelerationRatio;
-        boostAccelerationRatio = acceleration * boostAccelerationRatio;
     }
 
     void FixedUpdate()
@@ -67,7 +64,7 @@ public class Drift : MonoBehaviour
         leftTrail.emitting = isdrifting;
         rightTrail.emitting = isdrifting;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+/*    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Boost"))
         {
@@ -89,5 +86,5 @@ public class Drift : MonoBehaviour
         acceleration = slowAccelerationRatio;
 
         Invoke(nameof(ResetAccleration), 3f);
-    }
+    }*/
 }
