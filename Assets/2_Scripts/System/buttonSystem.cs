@@ -5,7 +5,9 @@ public class buttonSystem : MonoBehaviour
 {
     public Button[] Seasoning_button; //0.오리지날 1.레드콤보 2.황금올리브 3.허니콤보
     public GameObject button_Parent;
+
     static public int Seasoning; //0.기본 1.Original 2.Red 3.Olive 4.Honey
+
 
     void Start()
     {
@@ -79,4 +81,6 @@ public class buttonSystem : MonoBehaviour
         Delivery.hasChicken = 2;
         Button_close();
     }
+
+
 }

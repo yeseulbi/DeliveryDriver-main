@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Delivery : MonoBehaviour
@@ -10,12 +11,15 @@ public class Delivery : MonoBehaviour
 
     public static int hasChicken = 0; //0.기본 1.닭고기 보유 2.치킨 보유
     bool Seasoning = false;
+    bool Open;
 
     [SerializeField] Text Order;
     [SerializeField] Text Money;
     [SerializeField] GameObject akfvndtjs;
     [SerializeField] GameObject[] mistake_akfvndtjs; // 각 Customer 마다 다르게 수정
     [SerializeField] GameObject OrderObj;
+    [SerializeField] Animator Orderanimator;
+    [SerializeField] Button Order_Exit_Open_Button;
     SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -23,6 +27,11 @@ public class Delivery : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         akfvndtjsSetActive();
         OrderObj.SetActive(false);
+
+        if (Order_Exit_Open_Button != null)
+        {
+            Order_Exit_Open_Button.onClick.AddListener(Order_Exit_Open_Click);
+        }
     }
 
     void akfvndtjsSetActive()
@@ -39,6 +48,7 @@ public class Delivery : MonoBehaviour
         {
             orderSystem.CanOrder = true;
             OrderObj.SetActive(true);
+            Open=true;
             Debug.Log("치킨 픽업됨");
             Order.text = "닭고기 획득! 오더에 맞게 조리하자";
             hasChicken = 1;
@@ -86,6 +96,19 @@ public class Delivery : MonoBehaviour
         {
             Order.text = "배달을 시작하자!";
             Seasoning = false;
+        }
+    }
+    void Order_Exit_Open_Click()
+    {
+        if (Open)
+        {
+            Orderanimator.SetTrigger("orderExit");
+            Open = false;
+        }
+        else if(!Open)
+        {
+            Orderanimator.SetTrigger("orderOpen");
+            Open = true;
         }
     }
 }

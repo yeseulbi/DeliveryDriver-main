@@ -94,7 +94,7 @@ public class orderSystem : MonoBehaviour
             if (Customer == 2)
             {
                 //주문자 명
-                CustomerName = "여자애";
+                CustomerName = "소녀";
                 Order();
             }
 
