@@ -116,10 +116,10 @@ TextureImporter:
       name: himan_pocchari07_ojisan_0
       rect:
         serializedVersion: 2
-        x: 34
-        y: 131
-        width: 141
-        height: 309
+        x: 21
+        y: 268
+        width: 164
+        height: 178
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

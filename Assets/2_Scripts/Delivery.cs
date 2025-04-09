@@ -5,9 +5,6 @@ using UnityEngine.UI;
 public class Delivery : MonoBehaviour
 {
     public Chicken chickenCS;
-    [SerializeField] float delayTime = 0.5f;
-    [SerializeField] Color noChickenColor = new Color(1, 1, 1, 1);
-    [SerializeField] Color hasChickenColor = new Color(1, 0.3884149f, 0, 1);
 
     public static int hasChicken = 0; //0.기본 1.닭고기 보유 2.치킨 보유
     bool Seasoning = false;
@@ -18,6 +15,8 @@ public class Delivery : MonoBehaviour
     [SerializeField] GameObject akfvndtjs;
     [SerializeField] GameObject[] mistake_akfvndtjs; // 각 Customer 마다 다르게 수정
     [SerializeField] GameObject OrderObj;
+    [SerializeField] GameObject Driver_Chicken;
+    [SerializeField] GameObject Driver_Fried;
     [SerializeField] Animator Orderanimator;
     [SerializeField] Button Order_Exit_Open_Button;
     SpriteRenderer spriteRenderer;
@@ -46,15 +45,17 @@ public class Delivery : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Chicken") && hasChicken == 0) // 치킨 먹었을 때
         {
-            orderSystem.CanOrder = true;
-            OrderObj.SetActive(true);
-            Open=true;
-            Debug.Log("치킨 픽업됨");
             Order.text = "닭고기 획득! 오더에 맞게 조리하자";
-            hasChicken = 1;
+            
+            orderSystem.CanOrder = true;
+            Open=true;
             Seasoning = true;
-            Destroy(collision.gameObject, delayTime);
-            spriteRenderer.color = hasChickenColor;
+            hasChicken = 1;
+
+            Driver_Chicken.SetActive(true);
+            OrderObj.SetActive(true);
+            
+            Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.CompareTag("Store") && hasChicken == 0) // 닭고기가 없는 데 말 걸었을 때
@@ -76,24 +77,28 @@ public class Delivery : MonoBehaviour
                 else
                     orderSystem.intMoney += orderSystem.Instance.b;
                 Money.text = "돈: " + (orderSystem.intMoney / 10000) + "만원";
-                OrderObj.SetActive(false);
-                Debug.Log("치킨 배달됨");
                 Order.text = "닭고기가 없습니다. 고기를 획득하세요";
-                chickenCS.ChickenStart();
+
+                Driver_Fried.SetActive(false);
+                OrderObj.SetActive(false);
+                
+                chickenCS.ChickenStart(); // 치킨 재생성
+                
                 hasChicken = 0;
                 buttonSystem.Seasoning = 0; //치킨 시즈닝 제거
-                spriteRenderer.color = noChickenColor;
             }
         }
         else
         {
-            Debug.Log("제가 안시켰는데요?");
+            Debug.Log("저 치킨 안 시켰는데요?");
         }
     }
     private void Update()
     {
         if (hasChicken == 2 && Seasoning)
         {
+            Driver_Chicken.SetActive(false);
+            Driver_Fried.SetActive(true);
             Order.text = "배달을 시작하자!";
             Seasoning = false;
         }
