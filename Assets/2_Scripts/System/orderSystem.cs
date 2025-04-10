@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class orderSystem : MonoBehaviour
 {
-    public int Customer; //1.무샹, 2.아저씨, 3.여자애, 4.SUN, 5.판다
-    public string CustomerName;
+    public int Customer = 0; //1.무샹, 2.아저씨, 3.여자애, 4.SUN, 5.판다
+    public string CustomerName = "";
 
     [SerializeField] Text[] Order_Text;
     [SerializeField] Sprite[] Order_Sprite;

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Delivery : MonoBehaviour
 {
-    public Chicken chickenCS;
 
     public static int hasChicken = 0; //0.기본 1.닭고기 보유 2.치킨 보유
     bool Seasoning = false;
@@ -20,6 +19,9 @@ public class Delivery : MonoBehaviour
     [SerializeField] Animator Orderanimator;
     [SerializeField] Button Order_Exit_Open_Button;
     SpriteRenderer spriteRenderer;
+
+    public Chicken chickenCS;
+
 
     private void Start()
     {
@@ -41,6 +43,7 @@ public class Delivery : MonoBehaviour
     {
         mistake_akfvndtjs[orderSystem.Instance.Customer].SetActive(false);
     }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Chicken") && hasChicken == 0) // 치킨 먹었을 때
@@ -63,34 +66,38 @@ public class Delivery : MonoBehaviour
             akfvndtjs.SetActive(true);
             Invoke(nameof(akfvndtjsSetActive), 2f);
         }
-
-        if(orderSystem.Instance.CustomerName == collision.gameObject.name)
+        if (orderSystem.Instance != null &&
+    !string.IsNullOrEmpty(orderSystem.Instance.CustomerName) &&
+    collision.gameObject != null)
         {
-            if (collision.gameObject.CompareTag("Customer") && hasChicken == 2)
+            if (orderSystem.Instance.CustomerName == collision.gameObject.name)
             {
-                if (orderSystem.Instance.a != buttonSystem.Seasoning) // 주문과 치킨 종류가 다를 시 발생
+                if (collision.gameObject.CompareTag("Customer") && hasChicken == 2)
                 {
-                    mistake_akfvndtjs[orderSystem.Instance.Customer].SetActive(true);
-                    Debug.Log("잘 못 가져왔다...");
-                    Invoke("mistake_akfvndtjsSetActive", 2f);
-                }
-                else
-                    orderSystem.intMoney += orderSystem.Instance.b;
-                Money.text = "돈: " + (orderSystem.intMoney / 10000) + "만원";
-                Order.text = "닭고기가 없습니다. 고기를 획득하세요";
+                    if (orderSystem.Instance.a != buttonSystem.Seasoning) // 주문과 치킨 종류가 다를 시 발생
+                    {
+                        mistake_akfvndtjs[orderSystem.Instance.Customer].SetActive(true);
+                        Debug.Log("잘 못 가져왔다...");
+                        Invoke("mistake_akfvndtjsSetActive", 2f);
+                    }
+                    else
+                        orderSystem.intMoney += orderSystem.Instance.b;
+                    Money.text = "돈: " + (orderSystem.intMoney / 10000) + "만원";
+                    Order.text = "닭고기가 없습니다. 고기를 찾으세요";
 
-                Driver_Fried.SetActive(false);
-                OrderObj.SetActive(false);
-                
-                chickenCS.ChickenStart(); // 치킨 재생성
-                
-                hasChicken = 0;
-                buttonSystem.Seasoning = 0; //치킨 시즈닝 제거
+                    Driver_Fried.SetActive(false);
+                    OrderObj.SetActive(false);
+
+                    chickenCS.ChickenStart(); // 치킨 재생성
+
+                    hasChicken = 0;
+                    buttonSystem.Seasoning = 0; //치킨 시즈닝 제거
+                }
             }
-        }
-        else
-        {
-            Debug.Log("저 치킨 안 시켰는데요?");
+            else
+            {
+                //Debug.Log("저 치킨 안 시켰는데요?");
+            }
         }
     }
     private void Update()
